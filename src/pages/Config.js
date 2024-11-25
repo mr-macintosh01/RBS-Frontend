@@ -23,7 +23,7 @@ function Config() {
 
     useEffect(() => {
         axios
-		.get(`http://localhost:${process.env.REACT_APP_API_PORT}/config`)
+		.get(`http://${process.env.REACT_APP_API_PORT}/config`)
 		.then(res => {
             if (res.data.length) {
                 const config = res.data[0]
@@ -65,7 +65,7 @@ function Config() {
             }
         }
 
-        axios.put(`http://localhost:${process.env.REACT_APP_API_PORT}/config/${configId}`, obj)
+        axios.put(`http://${process.env.REACT_APP_API_PORT}/config/${configId}`, obj)
 		.then(res => {
             setConfigStatusText(res.data.message)
             console.log(res.data)

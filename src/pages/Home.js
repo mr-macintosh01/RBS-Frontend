@@ -7,7 +7,7 @@ import '../css/Home.css'
 
 function sendOrderToOMS(event) {
 	axios
-	.get(`http://localhost:${process.env.REACT_APP_API_PORT}/${event.target.innerHTML.replaceAll(' ', '')}`)
+	.get(`http://${process.env.REACT_APP_API_PORT}/${event.target.innerHTML.replaceAll(' ', '')}`)
 	.then(res => {
 		console.log(res.data)
 	})
@@ -45,7 +45,7 @@ function Home() {
 
 	const updateCurrentPositionCost = () => {
 		axios
-		.get(`http://localhost:${process.env.REACT_APP_API_PORT}/updateCurrentPositionCost`)
+		.get(`http://${process.env.REACT_APP_API_PORT}/updateCurrentPositionCost`)
 		.then(res => {
 			const data = res.data
 			console.log(data)
@@ -64,7 +64,7 @@ function Home() {
 
 	useEffect(() => {
 		axios
-		.get(`http://localhost:${process.env.REACT_APP_API_PORT}/getData`)
+		.get(`http://${process.env.REACT_APP_API_PORT}/getData`)
 		.then(res => {
 			console.log(res.data)
 			setData(res.data)

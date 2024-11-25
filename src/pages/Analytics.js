@@ -437,7 +437,7 @@ function Analytics() {
             }
         }
 
-		axios.post(`http://localhost:${process.env.REACT_APP_API_PORT}/getAnalytics`, obj)
+		axios.post(`http://${process.env.REACT_APP_API_PORT}/getAnalytics`, obj)
 		.then(res => {
             const recreatedObj = {}   
             const allDates = {}
