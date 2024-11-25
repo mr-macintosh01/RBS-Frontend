@@ -1,0 +1,21 @@
+.navigation-analytics {
+	display: flex;
+    width: 48%;
+}
+
+.navigation-analytics div:first-child {
+    margin-left: 10em;
+}
+
+.navigation-analytics div:last-child {
+    margin-left: 5em;
+}
+
+.navigation-analytics button {
+    width: 100%;
+	font-size: 1em;
+	border-radius: 10px;
+	border: none;
+	background-color: white;
+	padding: 1em;
+}
