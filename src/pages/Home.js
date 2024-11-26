@@ -27,8 +27,8 @@ function Home() {
             'bybitBalance': 0.0
         },
         'analytics': {
-            'price': 0.0,
             'serverTime': 0.0,
+			'tradingRegime': 'None',
             'prediction': 0.0,
             'binanceOpen': 0.0,
             'bybitOpen': 0.0,
@@ -101,6 +101,8 @@ function Home() {
 								(+data['analytics']['binanceOpen']['Puts'][1]['markIV']).toFixed(2) + '/' +
 								(+data['analytics']['binanceOpen']['Puts'][1]['askIV']).toFixed(2)
 							) : ''}</h3>
+							<h3>AveOpenIVBinance</h3>
+							<h3>{data['analytics']['binanceOpen'] ? (Math.sqrt(1/365) * (data['analytics']['binanceOpen']['Calls'].reduce((accum, current) => accum + +current['markIV'], 0) + data['analytics']['binanceOpen']['Puts'].reduce((accum, current) => accum + +current['markIV'], 0))/6).toFixed(5) : 'None'}</h3>
 						</div>
 						<div>
 							<h3>Bybit open IV</h3>
@@ -114,6 +116,8 @@ function Home() {
 								(+data['analytics']['bybitOpen']['Puts'][1]['markIV']).toFixed(2) + '/' +
 								(+data['analytics']['bybitOpen']['Puts'][1]['ask1IV']).toFixed(2)
 							) : ''}</h3>
+							<h3>AveOpenIVBybit</h3>
+							<h3>{data['analytics']['bybitOpen'] ? (Math.sqrt(1/365) * (data['analytics']['bybitOpen']['Calls'].reduce((accum, current) => accum + +current['markIV'], 0) + data['analytics']['bybitOpen']['Puts'].reduce((accum, current) => accum + +current['markIV'], 0))/6).toFixed(5) : 'None'}</h3>
 						</div>
 					</div>
 				</div>
@@ -145,10 +149,11 @@ function Home() {
 						<div>
 							<button onClick={sendOrderToOMS} style={{background:'#26ff00'}}>Start</button>
 							<button onClick={sendOrderToOMS} style={{background:'#ff9101'}}>Soft Stop</button>
-						</div>
-						<div>
 							<button onClick={sendOrderToOMS} style={{background:'#ad0d0d'}}>Hard Stop</button>
 						</div>
+					</div>
+					<div>
+						<h2 style={{marginBottom: '0'}}>Current Trading Regime: {data['analytics']['tradingRegime']}</h2>
 					</div>
                     <div className='navigation'>
                         <Link to={'/analytics'}>
