@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import { LineChart } from '@mui/x-charts/LineChart'
+import { BarChart } from '@mui/x-charts/BarChart'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 
@@ -22,6 +23,11 @@ function Analytics() {
     const [balance, setBalance] = useState([])
     const [binanceBalance, setBinanceBalance] = useState([])
     const [bybitBalance, setBybitBalance] = useState([])
+
+    const [positionsDates, setPositionsDates] = useState([])
+    const [positionsPercentage, setPositionsPercentage] = useState([])
+    const [binanceLongPositions, setBinanceLongPositions] = useState([])
+    const [bybitShortPositions, setBybitShortPositions] = useState([])
 
     const [historicalVolatility, setHistoricalVolatility] = useState([])
 
@@ -46,8 +52,12 @@ function Analytics() {
     const [valueBinanceBalance, setValueBinanceBalance] = useState([0, 1])
     const [valueBybitBalance, setValueBybitBalance] = useState([0, 1])
 
+    const [valuePositionsPercentage, setValuePositionsPercentage] = useState([0, 1])
+    const [valueBinanceLongPositions, setValueBinanceLongPositions] = useState([0, 1])
+    const [valueBybitShortPositions, setValueBybitShortPositions] = useState([0, 1])
+
+
     const handleCheckboxChange = event => {
-        console.log(event)
         if (event.target.checked) {
             switch(event.target.name) {
                 case 'historicalVolatility':
@@ -60,7 +70,6 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
                     break
                 case 'bidIVOpenBinance': 
                     setArrayToShow([
@@ -72,7 +81,6 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
                     break
                 case 'markIVOpenBinance':
                     setArrayToShow([
@@ -85,7 +93,6 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
                     break
                 case 'askIVOpenBinance': 
                     setArrayToShow([
@@ -97,7 +104,6 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
                     break
                 case 'prediction': 
                     setArrayToShow([
@@ -109,7 +115,6 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
                     break
                 case 'bidIVCloseBinance': 
                     setArrayToShow([
@@ -121,7 +126,6 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
                     break
                 case 'markIVCloseBinance': 
                     setArrayToShow([
@@ -133,7 +137,6 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
                     break
                 case 'askIVCloseBinance': 
                     setArrayToShow([
@@ -145,7 +148,6 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
                     break
 
                 case 'bidIVOpenBybit': 
@@ -158,7 +160,6 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
                     break
                 case 'markIVOpenBybit':
                     setArrayToShow([
@@ -171,7 +172,7 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
+
                     break
                 case 'askIVOpenBybit': 
                     setArrayToShow([
@@ -183,7 +184,7 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
+
                     break
                 case 'bidIVCloseBybit': 
                     setArrayToShow([
@@ -195,7 +196,6 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
                     break
                 case 'markIVCloseBybit': 
                     setArrayToShow([
@@ -207,7 +207,6 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
                     break
                 case 'askIVCloseBybit': 
                     setArrayToShow([
@@ -219,7 +218,6 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
-                    console.log(event.target.name)
                     break
                 default:
                     console.log('nothing')
@@ -242,7 +240,6 @@ function Analytics() {
                             label: 'bidIV Open Binance',
                             curve: 'linear',
                         })))
-                        console.log(event.target.name)
                         break    
                 case 'markIVOpenBinance':
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -251,7 +248,6 @@ function Analytics() {
                         label: 'markIV Open Binance',
                         curve: 'linear',
                     })))
-                    console.log(event.target.name)
                     break
                 case 'askIVOpenBinance':
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -260,7 +256,6 @@ function Analytics() {
                         label: 'askIV Open Binance',
                         curve: 'linear',
                     })))
-                    console.log(event.target.name)
                     break 
                 case 'prediction': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -269,7 +264,6 @@ function Analytics() {
                         label: 'Prediction',
                         curve: 'linear',
                     })))
-                    console.log(event.target.name)
                     break
                 case 'bidIVCloseBinance': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -278,7 +272,6 @@ function Analytics() {
                         label: 'bidIV Close Binance',
                         curve: 'linear',
                     })))
-                    console.log(event.target.name)
                     break
                 case 'markIVCloseBinance': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -287,7 +280,6 @@ function Analytics() {
                         label: 'markIV Close Binance',
                         curve: 'linear',
                     })))
-                    console.log(event.target.name)
                     break
                 case 'askIVCloseBinance': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -296,7 +288,6 @@ function Analytics() {
                         label: 'askIV Close Binance',
                         curve: 'linear',
                     })))
-                    console.log(event.target.name)
                     break
                 case 'bidIVOpenBybit':
                         setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -305,7 +296,6 @@ function Analytics() {
                             label: 'bidIV Open Bybit',
                             curve: 'linear',
                         })))
-                        console.log(event.target.name)
                         break    
                 case 'markIVOpenBybit':
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -314,7 +304,6 @@ function Analytics() {
                         label: 'markIV Open Bybit',
                         curve: 'linear',
                     })))
-                    console.log(event.target.name)
                     break
                 case 'askIVOpenBybit':
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -323,7 +312,6 @@ function Analytics() {
                         label: 'askIV Open Bybit',
                         curve: 'linear',
                     })))
-                    console.log(event.target.name)
                     break 
                 case 'bidIVCloseBybit': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -332,7 +320,6 @@ function Analytics() {
                         label: 'bidIV Close Bybit',
                         curve: 'linear',
                     })))
-                    console.log(event.target.name)
                     break
                 case 'markIVCloseBybit': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -341,7 +328,6 @@ function Analytics() {
                         label: 'markIV Close Bybit',
                         curve: 'linear',
                     })))
-                    console.log(event.target.name)
                     break
                 case 'askIVCloseBybit': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -350,7 +336,6 @@ function Analytics() {
                         label: 'askIV Close Bybit',
                         curve: 'linear',
                     })))
-                    console.log(event.target.name)
                     break
                 default:
                     console.log('nothing')
@@ -434,6 +419,20 @@ function Analytics() {
                 sort: {
                     date: 1
                 }
+            },
+            positionsHistoryQuery: {
+                find: {},
+                projection: {
+                    date: 1,
+                    _id: 0,
+                    profit$: 1,
+                    'profit%': 1,
+                    platform: 1,
+                    type: 1,
+                },
+                sort: {
+                    date: 1
+                }
             }
         }
 
@@ -476,7 +475,7 @@ function Analytics() {
                     }
                 }
             }
-            console.log(allDates)
+
             const datesArr = []
 
             for (let i = 0; i < allDatesKeys.length; i++) {
@@ -601,7 +600,60 @@ function Analytics() {
             setBalance(balance)
             setBinanceBalance(binanceBalance)
             setBybitBalance(bybitBalance)
-		})
+
+            let positionsDates = []
+            let positionsPercentage= []
+            let binanceLongPositions = []
+            let bybitShortPositions = []
+
+            let initialDate = new Date(res.data['positionsHistory'][0]['date']).getTime()
+            positionsDates.push(initialDate)
+
+            let deltaDays = (new Date(res.data['positionsHistory'][res.data['positionsHistory'].length - 1]['date']).getTime() - positionsDates[0])/(24 * 60 * 60 * 1000)
+            
+            for (let i = 0; i < deltaDays; i++) {
+                positionsDates.push(initialDate + (i + 1) * 24 * 60 * 60 * 1000)
+            }
+
+            const positionsObject = {}
+
+            for (let i = 0; i < res.data['positionsHistory'].length; i++) {
+                positionsObject[new Date(res.data['positionsHistory'][i]['date']).getTime()] = res.data['positionsHistory'][i]
+            }
+
+            for (let i = 0; i < positionsDates.length; i++) {
+                if (!(positionsDates[i] in positionsObject)) {
+                    positionsObject[positionsDates[i]] = 0
+                }
+            }
+
+            for (let i = 0; i < positionsDates.length; i++) {
+                if (positionsObject[positionsDates[i]]) {
+                    if (positionsObject[positionsDates[i]]['platform'] === 'Binance') {
+                        if (positionsObject[positionsDates[i]]['type'] === 'LONG') {
+                            binanceLongPositions.push(positionsObject[positionsDates[i]]['profit$'])
+                        }
+                        bybitShortPositions.push(0)
+
+                    } else if (positionsObject[positionsDates[i]]['platform'] === 'Bybit') {
+                        if (positionsObject[positionsDates[i]]['type'] === 'SHORT') {
+                            bybitShortPositions.push(positionsObject[positionsDates[i]]['profit$'])
+                        }
+                        binanceLongPositions.push(0)
+                    }
+                    positionsPercentage.push(positionsObject[positionsDates[i]]['profit%'] * 100)
+                } else {
+                    positionsPercentage.push(0)
+                    binanceLongPositions.push(0)
+                    bybitShortPositions.push(0)
+                }
+            }
+
+            setPositionsDates(positionsDates)
+            setPositionsPercentage(positionsPercentage)
+            setBinanceLongPositions(binanceLongPositions)
+            setBybitShortPositions(bybitShortPositions)
+        })
 		.catch(e => {
 			console.log(e)
 		})
@@ -951,6 +1003,251 @@ function Analytics() {
                             valueLabelDisplay="auto"
                             min={0}
                             max={balanceDates.length - 1}
+                            sx={{ mt: 2 }}
+                        />   
+                    </Box>
+                    </div>
+                </div>
+                <h1 style={{textAlign: 'center', border: '1px solid white', paddingTop: '1em', paddingBottom: '1em'}}>Positions History</h1>
+                <div style={{marginTop: '3em'}}>
+                    <div style={{textAlign: 'center'}}>
+                        <h2>General Positions History</h2>
+                    </div>
+                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <Box  style={{width: '70%'}}>
+                        <BarChart
+                            margin={{left: 100}}
+                            slotProps={{
+                                grid: {
+                                    fill: 'white',
+                                },
+                                legend: {
+                                    labelStyle: {
+                                        fill: 'white',
+                                    }
+                                }
+                            }}
+                            grid={{ vertical: true , horizontal: true }}
+                            xAxis={[{
+                                scaleType: 'band',
+                                data: positionsDates,
+                                valueFormatter: valueFormatter,
+                                min: positionsDates[valuePositionsPercentage[0]],
+                                max: positionsDates[valuePositionsPercentage[1]],
+                                label: 'Date',
+                            }]}
+                            yAxis={[
+                                {
+                                    colorMap: {
+                                        type: 'piecewise',
+                                        thresholds: [0],
+                                        colors: ['red', 'green']
+                                    }
+                                }
+                            ]}
+                            series={[
+                                {
+                                    data: positionsPercentage,
+                                    color: 'gold',
+                                    label: 'Positions Profit %',
+                                }
+                            ]}
+                            height={500}
+                            sx={{
+
+                                "& .MuiChartsAxis-left .MuiChartsAxis-line":{
+                                    stroke: "#ffffff",
+                                    strokeWidth: 1,
+                                },
+                                "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
+                                    stroke: "#ffffff",
+                                    strokeWidth: 1,
+                                },
+                                "& .MuiChartsAxis-left .MuiChartsAxis-tick":{
+                                    stroke: "#ffffff",
+                                },
+                                "& .MuiChartsAxis-bottom .MuiChartsAxis-tick":{
+                                    stroke: '#ffffff'
+                                },
+                                "& .MuiChartsAxis-bottom .MuiChartsAxis-label":{
+                                    fill: '#ffffff'
+                                },
+                                "& .MuiChartsAxis-left .MuiChartsAxis-label":{
+                                    fill: '#ffffff',
+                                },
+                                "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
+                                    fill: '#ffffff',
+                                },
+                            }}                            
+                        /> 
+                        <Slider
+                            value={valuePositionsPercentage}
+                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValuePositionsPercentage, valuePositionsPercentage)}
+                            valueLabelDisplay="auto"
+                            min={0}
+                            max={positionsDates.length - 1}
+                            sx={{ mt: 2 }}
+                        />   
+                    </Box>
+                    </div>
+                    <div style={{textAlign: 'center'}}>
+                        <h2>Binance LONG Positions History</h2>
+                    </div>
+                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <Box  style={{width: '70%'}}>
+                        <BarChart
+                            margin={{left: 100}}
+                            slotProps={{
+                                grid: {
+                                    fill: 'white',
+                                },
+                                legend: {
+                                    labelStyle: {
+                                        fill: 'white',
+                                    }
+                                }
+                            }}
+                            grid={{ vertical: true , horizontal: true }}
+                            xAxis={[{
+                                scaleType: 'band',
+                                data: positionsDates,
+                                valueFormatter: valueFormatter,
+                                min: positionsDates[valueBinanceLongPositions[0]],
+                                max: positionsDates[valueBinanceLongPositions[1]],
+                                label: 'Date',
+                                
+                            }]}
+                            yAxis={[
+                                {
+                                    colorMap: {
+                                        type: 'piecewise',
+                                        thresholds: [0],
+                                        colors: ['red', 'green']
+                                    }
+                                }
+                            ]}
+                            series={[
+                                {
+                                    data: binanceLongPositions,
+                                    color: 'gold',
+                                    label: 'Positions Profit $',
+                                }
+                            ]}
+                            height={500}
+                            sx={{
+
+                                "& .MuiChartsAxis-left .MuiChartsAxis-line":{
+                                    stroke: "#ffffff",
+                                    strokeWidth: 1,
+                                },
+                                "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
+                                    stroke: "#ffffff",
+                                    strokeWidth: 1,
+                                },
+                                "& .MuiChartsAxis-left .MuiChartsAxis-tick":{
+                                    stroke: "#ffffff",
+                                },
+                                "& .MuiChartsAxis-bottom .MuiChartsAxis-tick":{
+                                    stroke: '#ffffff'
+                                },
+                                "& .MuiChartsAxis-bottom .MuiChartsAxis-label":{
+                                    fill: '#ffffff'
+                                },
+                                "& .MuiChartsAxis-left .MuiChartsAxis-label":{
+                                    fill: '#ffffff',
+                                },
+                                "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
+                                    fill: '#ffffff',
+                                },
+                            }}                            
+                        /> 
+                        <Slider
+                            value={valueBinanceLongPositions}
+                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBinanceLongPositions, valueBinanceLongPositions)}
+                            valueLabelDisplay="auto"
+                            min={0}
+                            max={positionsDates.length - 1}
+                            sx={{ mt: 2 }}
+                        />   
+                    </Box>
+                    </div>
+                    <div style={{textAlign: 'center'}}>
+                        <h2>Bybit SHORT Positions History</h2>
+                    </div>
+                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <Box  style={{width: '70%'}}>
+                        <BarChart
+                            margin={{left: 100}}
+                            slotProps={{
+                                grid: {
+                                    fill: 'white',
+                                },
+                                legend: {
+                                    labelStyle: {
+                                        fill: 'white',
+                                    }
+                                }
+                            }}
+                            grid={{ vertical: true , horizontal: true }}
+                            xAxis={[{
+                                scaleType: 'band',
+                                data: positionsDates,
+                                valueFormatter: valueFormatter,
+                                min: positionsDates[valueBybitShortPositions[0]],
+                                max: positionsDates[valueBybitShortPositions[1]],
+                                label: 'Date',
+                                
+                            }]}
+                            yAxis={[
+                                {
+                                    colorMap: {
+                                        type: 'piecewise',
+                                        thresholds: [0],
+                                        colors: ['red', 'green']
+                                    }
+                                }
+                            ]}
+                            series={[
+                                {
+                                    data: bybitShortPositions,
+                                    color: 'gold',
+                                    label: 'Positions Profit $',
+                                }
+                            ]}
+                            height={500}
+                            sx={{
+
+                                "& .MuiChartsAxis-left .MuiChartsAxis-line":{
+                                    stroke: "#ffffff",
+                                    strokeWidth: 1,
+                                },
+                                "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
+                                    stroke: "#ffffff",
+                                    strokeWidth: 1,
+                                },
+                                "& .MuiChartsAxis-left .MuiChartsAxis-tick":{
+                                    stroke: "#ffffff",
+                                },
+                                "& .MuiChartsAxis-bottom .MuiChartsAxis-tick":{
+                                    stroke: '#ffffff'
+                                },
+                                "& .MuiChartsAxis-bottom .MuiChartsAxis-label":{
+                                    fill: '#ffffff'
+                                },
+                                "& .MuiChartsAxis-left .MuiChartsAxis-label":{
+                                    fill: '#ffffff',
+                                },
+                                "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
+                                    fill: '#ffffff',
+                                },
+                            }}                            
+                        /> 
+                        <Slider
+                            value={valueBybitShortPositions}
+                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBybitShortPositions, valueBybitShortPositions)}
+                            valueLabelDisplay="auto"
+                            min={0}
+                            max={positionsDates.length - 1}
                             sx={{ mt: 2 }}
                         />   
                     </Box>
