@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
+import VerificationNotPassed from '../components/VerificationNotPassed'
+
 import { LineChart } from '@mui/x-charts/LineChart'
 import { BarChart } from '@mui/x-charts/BarChart'
 import Box from '@mui/material/Box'
@@ -15,6 +17,8 @@ const minDistance = 1
 const valueFormatter = date => '' + new Date(date).getFullYear() + '-' + new Date(date).toISOString().split('-')[1] + '-' + new Date(date).toString().split(' ')[2]
 
 function Analytics() {
+	const [sessionResult, setSessionResult] = useState(false)
+	const [isLoader, setIsLoader] = useState(true)
     const [arrayToShow, setArrayToShow] = useState([])
 
     const [dates, setDates] = useState([])
@@ -47,15 +51,14 @@ function Analytics() {
     const [askIVOpenBybit, setAskIVOpenBybit] = useState([])
     const [askIVCloseBybit, setAskIVCloseBybit] = useState([])
     
-    const [valueAnalytics, setValueAnalytics] = useState([0, 1]);
-    const [valueBalance, setValueBalance] = useState([0, 1]);
+    const [valueAnalytics, setValueAnalytics] = useState([0, 1])
+    const [valueBalance, setValueBalance] = useState([0, 1])
     const [valueBinanceBalance, setValueBinanceBalance] = useState([0, 1])
     const [valueBybitBalance, setValueBybitBalance] = useState([0, 1])
 
     const [valuePositionsPercentage, setValuePositionsPercentage] = useState([0, 1])
     const [valueBinanceLongPositions, setValueBinanceLongPositions] = useState([0, 1])
     const [valueBybitShortPositions, setValueBybitShortPositions] = useState([0, 1])
-
 
     const handleCheckboxChange = event => {
         if (event.target.checked) {
@@ -70,6 +73,7 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
+                    console.log(event.target.name)
                     break
                 case 'bidIVOpenBinance': 
                     setArrayToShow([
@@ -196,6 +200,7 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
+                    console.log(event.target.name)
                     break
                 case 'markIVCloseBybit': 
                     setArrayToShow([
@@ -207,6 +212,7 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
+                    console.log(event.target.name)
                     break
                 case 'askIVCloseBybit': 
                     setArrayToShow([
@@ -218,6 +224,7 @@ function Analytics() {
                         },
                         ...arrayToShow
                     ])
+                    console.log(event.target.name)
                     break
                 default:
                     console.log('nothing')
@@ -240,6 +247,7 @@ function Analytics() {
                             label: 'bidIV Open Binance',
                             curve: 'linear',
                         })))
+                        console.log(event.target.name)
                         break    
                 case 'markIVOpenBinance':
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -248,6 +256,7 @@ function Analytics() {
                         label: 'markIV Open Binance',
                         curve: 'linear',
                     })))
+                    console.log(event.target.name)
                     break
                 case 'askIVOpenBinance':
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -256,6 +265,7 @@ function Analytics() {
                         label: 'askIV Open Binance',
                         curve: 'linear',
                     })))
+                    console.log(event.target.name)
                     break 
                 case 'prediction': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -264,6 +274,7 @@ function Analytics() {
                         label: 'Prediction',
                         curve: 'linear',
                     })))
+                    console.log(event.target.name)
                     break
                 case 'bidIVCloseBinance': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -272,6 +283,7 @@ function Analytics() {
                         label: 'bidIV Close Binance',
                         curve: 'linear',
                     })))
+                    console.log(event.target.name)
                     break
                 case 'markIVCloseBinance': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -280,6 +292,7 @@ function Analytics() {
                         label: 'markIV Close Binance',
                         curve: 'linear',
                     })))
+                    console.log(event.target.name)
                     break
                 case 'askIVCloseBinance': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -288,6 +301,7 @@ function Analytics() {
                         label: 'askIV Close Binance',
                         curve: 'linear',
                     })))
+                    console.log(event.target.name)
                     break
                 case 'bidIVOpenBybit':
                         setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -296,6 +310,7 @@ function Analytics() {
                             label: 'bidIV Open Bybit',
                             curve: 'linear',
                         })))
+                        console.log(event.target.name)
                         break    
                 case 'markIVOpenBybit':
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -304,6 +319,7 @@ function Analytics() {
                         label: 'markIV Open Bybit',
                         curve: 'linear',
                     })))
+                    console.log(event.target.name)
                     break
                 case 'askIVOpenBybit':
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -312,6 +328,7 @@ function Analytics() {
                         label: 'askIV Open Bybit',
                         curve: 'linear',
                     })))
+                    console.log(event.target.name)
                     break 
                 case 'bidIVCloseBybit': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -320,6 +337,7 @@ function Analytics() {
                         label: 'bidIV Close Bybit',
                         curve: 'linear',
                     })))
+                    console.log(event.target.name)
                     break
                 case 'markIVCloseBybit': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -328,6 +346,7 @@ function Analytics() {
                         label: 'markIV Close Bybit',
                         curve: 'linear',
                     })))
+                    console.log(event.target.name)
                     break
                 case 'askIVCloseBybit': 
                     setArrayToShow(arrayToShow.filter(line => JSON.stringify(line) !== JSON.stringify({
@@ -336,6 +355,7 @@ function Analytics() {
                         label: 'askIV Close Bybit',
                         curve: 'linear',
                     })))
+                    console.log(event.target.name)
                     break
                 default:
                     console.log('nothing')
@@ -345,21 +365,21 @@ function Analytics() {
     }
 
     const handleChange = (event, newValue, activeThumb, stateFunc, dates) => {
-      if (!Array.isArray(newValue)) {
-        return;
-      }
-      if (newValue[1] - newValue[0] < minDistance) {
-        if (activeThumb === 0) {
-          const clamped = Math.min(newValue[0], dates.length - minDistance);
-          stateFunc([clamped, clamped + minDistance]);
-        } else {
-          const clamped = Math.max(newValue[1], minDistance);
-          stateFunc([clamped - minDistance, clamped]);
+        if (!Array.isArray(newValue)) {
+            return;
         }
-      } else {
-        stateFunc(newValue);
-      }
-    };
+        if (newValue[1] - newValue[0] < minDistance) {
+            if (activeThumb === 0) {
+                const clamped = Math.min(newValue[0], dates.length - minDistance - 1);
+                stateFunc([clamped, clamped + minDistance]);
+            } else {
+                const clamped = Math.max(newValue[1], minDistance);
+                stateFunc([clamped - minDistance, clamped]);
+            }
+        } else {
+            stateFunc(newValue);
+        }
+    }
     
     useEffect(() => {
         const obj = {
@@ -436,8 +456,9 @@ function Analytics() {
             }
         }
 
-		axios.post(`http://${process.env.REACT_APP_API_PORT}/getAnalytics`, obj)
-		.then(res => {
+        axios.post(`http://${process.env.REACT_APP_API_PORT}/getAnalytics`, obj, {headers: {'passwordhash': sessionStorage['passwordhash']}})
+        .then(res => {
+            setSessionResult(res.headers.verificationstatus)
             const recreatedObj = {}   
             const allDates = {}
             
@@ -654,367 +675,367 @@ function Analytics() {
             setBinanceLongPositions(binanceLongPositions)
             setBybitShortPositions(bybitShortPositions)
         })
-		.catch(e => {
-			console.log(e)
-		})
-		
+        .catch(e => {
+            console.log(e)
+            setIsLoader(false)
+        })
 	}, [])
 
     return (
-        <>
+        <>{sessionResult ? (
             <div>
-                <div style={{display: 'flex', alignItems: 'center', border: '1px solid white'}}>
-                    <div style={{display: 'flex', width: '58%', justifyContent: 'end'}}>
-                        <h1 >Analytics</h1>
+            <div style={{display: 'flex', alignItems: 'center', border: '1px solid white'}}>
+                <div style={{display: 'flex', width: '58%', justifyContent: 'end'}}>
+                    <h1>Analytics</h1>
+                </div>
+                <div className='navigation-analytics'>
+                    <div>
+                        <Link to={'/'}>
+                            <button>Home Page</button>
+                        </Link>
                     </div>
-                    <div className='navigation-analytics'>
-                        <div>
-                            <Link to={'/'}>
-                                <button>Home Page</button>
-                            </Link>
-                        </div>
-                        <div>
-                            <Link to={'/config'}>
-                                <button>Config Page</button>
-                            </Link>
-                        </div>
+                    <div>
+                        <Link to={'/config'}>
+                            <button>Config Page</button>
+                        </Link>
                     </div>
                 </div>
-                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                    <Box style={{width: '70%'}}>
-                        <LineChart
-                            slotProps={{
-                                legend: {
-                                    labelStyle: {
-                                        fill: 'white',
-                                    }
-                                }
-                            }}
-                            grid={{ vertical: true , horizontal: true }}
-                            xAxis={[{
-                                data: dates,
-                                valueFormatter: valueFormatter,
-                                min: dates[valueAnalytics[0]],
-                                max: dates[valueAnalytics[1]],
-                                label: 'Date',
-                                
-                            }]}
-                            series={
-                                arrayToShow
-                            }
-                            height={500}
-                            sx={{
-
-                                "& .MuiChartsAxis-left .MuiChartsAxis-line":{
-                                    stroke: "#ffffff",
-                                    strokeWidth: 1,
-                                },
-                                "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
-                                    stroke: "#ffffff",
-                                    strokeWidth: 1,
-                                },
-                                "& .MuiChartsAxis-left .MuiChartsAxis-tick":{
-                                    stroke: "#ffffff",
-                                },
-                                "& .MuiChartsAxis-bottom .MuiChartsAxis-tick":{
-                                    stroke: '#ffffff'
-                                },
-                                "& .MuiChartsAxis-bottom .MuiChartsAxis-label":{
-                                    fill: '#ffffff'
-                                },
-                                "& .MuiChartsAxis-left .MuiChartsAxis-label":{
-                                    fill: '#ffffff'
-                                },
-                                "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
-                                    fill: '#ffffff',
-                                },
-                            }}                            
-                        /> 
-                        <Slider
-                            value={valueAnalytics}
-                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueAnalytics, dates)}
-                            valueLabelDisplay="auto"
-                            min={0}
-                            max={dates.length - 1}
-                            sx={{ mt: 2 }}
-                        />   
-                    </Box>
-                </div>
-                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <div style={{maxWidth: '1200px', display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
-                        <div style={{ marginRight: '1em'}}>
-                            <input type='checkbox' name='historicalVolatility' onChange={handleCheckboxChange} />
-                            <label htmlFor='historicalVolatility' style={{color: '#00b4d8'}}>Historical Volatility</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='bidIVOpenBinance' onChange={handleCheckboxChange} />
-                            <label htmlFor='bidIVOpenBinance' style={{color: '#38b000'}}>bidIV Open Binance</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='markIVOpenBinance' onChange={handleCheckboxChange} />
-                            <label htmlFor='markIVOpenBinance' style={{color: 'yellow'}}>markIV Open Binance</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='askIVOpenBinance' onChange={handleCheckboxChange} />
-                            <label htmlFor='askIVOpenBinance' style={{color: '#d00000'}}>askIV Open Binance</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='prediction' onChange={handleCheckboxChange} />
-                            <label htmlFor='prediction' style={{color: '#ec0868'}}>Prediction</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='bidIVCloseBinance' onChange={handleCheckboxChange} />
-                            <label htmlFor='bidIVCloseBinance' style={{color: '#38b000'}}>bidIV Close Binance</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='markIVCloseBinance' onChange={handleCheckboxChange} />
-                            <label htmlFor='markIVCloseBinance' style={{color: 'yellow'}}>markIV Close Binance</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='askIVCloseBinance' onChange={handleCheckboxChange} />
-                            <label htmlFor='askIVCloseBinance' style={{color: '#d00000'}}>askIV Close Binance</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='bidIVOpenBybit' onChange={handleCheckboxChange} />
-                            <label htmlFor='bidIVOpenBybit' style={{color: '#38b000'}}>bidIV Open Bybit</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='markIVOpenBybit' onChange={handleCheckboxChange} />
-                            <label htmlFor='markIVOpenBybit' style={{color: 'yellow'}}>markIV Open Bybit</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='askIVOpenBybit' onChange={handleCheckboxChange} />
-                            <label htmlFor='askIVOpenBybit' style={{color: '#d00000'}}>askIV Open Bybit</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='bidIVCloseBybit' onChange={handleCheckboxChange} />
-                            <label htmlFor='bidIVCloseBybit' style={{color: '#38b000'}}>bidIV Close Bybit</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='markIVCloseBybit' onChange={handleCheckboxChange} />
-                            <label htmlFor='markIVCloseBybit' style={{color: 'yellow'}}>markIV Close Bybit</label>
-                        </div>
-                        <div style={{marginRight: '1em'}}>
-                            <input type='checkbox' name='askIVCloseBybit' onChange={handleCheckboxChange} />
-                            <label htmlFor='askIVCloseBybit' style={{color: '#d00000'}}>askIV Close Bybit</label>
-                        </div>
-                    </div>
-                </div>
-                <h1 style={{textAlign: 'center', border: '1px solid white', paddingTop: '1em', paddingBottom: '1em'}}>Balances</h1>
-                <div style={{marginTop: '3em'}}>
-                    <div style={{textAlign: 'center'}}>
-                        <h2>General Balance</h2>
-                    </div>
-                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Box  style={{width: '70%'}}>
-                        <LineChart
-                            margin={{left: 100}}
-                            slotProps={{
-                                grid: {
+            </div>
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+                <Box style={{width: '70%'}}>
+                    <LineChart
+                        slotProps={{
+                            legend: {
+                                labelStyle: {
                                     fill: 'white',
-                                },
-                                legend: {
-                                    labelStyle: {
-                                        fill: 'white',
-                                    }
                                 }
-                            }}
-                            grid={{ vertical: true , horizontal: true }}
-                            xAxis={[{
-                                data: balanceDates,
-                                valueFormatter: valueFormatter,
-                                min: balanceDates[valueBalance[0]],
-                                max: balanceDates[valueBalance[1]],
-                                label: 'Date',
-                                
-                            }]}
-                            series={[
-                                {
-                                    data: balance,
-                                    color: 'gold',
-                                    label: 'General Balance',
-                                }
-                            ]}
-                            height={500}
-                            sx={{
+                            }
+                        }}
+                        grid={{ vertical: true , horizontal: true }}
+                        xAxis={[{
+                            data: dates,
+                            valueFormatter: valueFormatter,
+                            min: dates[valueAnalytics[0]],
+                            max: dates[valueAnalytics[1]],
+                            label: 'Date',
+                            
+                        }]}
+                        series={
+                            arrayToShow
+                        }
+                        height={500}
+                        sx={{
 
-                                "& .MuiChartsAxis-left .MuiChartsAxis-line":{
-                                    stroke: "#ffffff",
-                                    strokeWidth: 1,
-                                },
-                                "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
-                                    stroke: "#ffffff",
-                                    strokeWidth: 1,
-                                },
-                                "& .MuiChartsAxis-left .MuiChartsAxis-tick":{
-                                    stroke: "#ffffff",
-                                },
-                                "& .MuiChartsAxis-bottom .MuiChartsAxis-tick":{
-                                    stroke: '#ffffff'
-                                },
-                                "& .MuiChartsAxis-bottom .MuiChartsAxis-label":{
-                                    fill: '#ffffff'
-                                },
-                                "& .MuiChartsAxis-left .MuiChartsAxis-label":{
-                                    fill: '#ffffff',
-                                },
-                                "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
-                                    fill: '#ffffff',
-                                },
-                            }}                            
-                        /> 
-                        <Slider
-                            value={valueBalance}
-                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBalance, balanceDates)}
-                            valueLabelDisplay="auto"
-                            min={0}
-                            max={balanceDates.length - 1}
-                            sx={{ mt: 2 }}
-                        />   
-                    </Box>
+                            "& .MuiChartsAxis-left .MuiChartsAxis-line":{
+                                stroke: "#ffffff",
+                                strokeWidth: 1,
+                            },
+                            "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
+                                stroke: "#ffffff",
+                                strokeWidth: 1,
+                            },
+                            "& .MuiChartsAxis-left .MuiChartsAxis-tick":{
+                                stroke: "#ffffff",
+                            },
+                            "& .MuiChartsAxis-bottom .MuiChartsAxis-tick":{
+                                stroke: '#ffffff'
+                            },
+                            "& .MuiChartsAxis-bottom .MuiChartsAxis-label":{
+                                fill: '#ffffff'
+                            },
+                            "& .MuiChartsAxis-left .MuiChartsAxis-label":{
+                                fill: '#ffffff'
+                            },
+                            "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
+                                fill: '#ffffff',
+                            },
+                        }}                            
+                    /> 
+                    <Slider
+                        value={valueAnalytics}
+                        onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueAnalytics, dates)}
+                        valueLabelDisplay="auto"
+                        min={0}
+                        max={dates.length - 1}
+                        sx={{ mt: 2 }}
+                    />   
+                </Box>
+            </div>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                <div style={{maxWidth: '1200px', display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
+                    <div style={{ marginRight: '1em'}}>
+                        <input type='checkbox' name='historicalVolatility' onChange={handleCheckboxChange} />
+                        <label htmlFor='historicalVolatility' style={{color: '#00b4d8'}}>Historical Volatility</label>
                     </div>
-                    <div style={{textAlign: 'center'}}>
-                        <h2>Binance Balance</h2>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='bidIVOpenBinance' onChange={handleCheckboxChange} />
+                        <label htmlFor='bidIVOpenBinance' style={{color: '#38b000'}}>bidIV Open Binance</label>
                     </div>
-                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Box style={{width: '70%'}}>
-                        <LineChart
-                            slotProps={{
-                                legend: {
-                                    labelStyle: {
-                                        fill: 'white',
-                                    }
-                                }
-                            }}
-                            grid={{ vertical: true , horizontal: true }}
-                            xAxis={[{
-                                data: balanceDates,
-                                valueFormatter: valueFormatter,
-                                min: balanceDates[valueBinanceBalance[0]],
-                                max: balanceDates[valueBinanceBalance[1]],
-                                label: 'Date',
-                                
-                            }]}
-                            series={[
-                                {
-                                    data: binanceBalance,
-                                    color: 'gold',
-                                    label: 'Binance Balance'
-                                }
-                            ]}
-                            height={500}
-                            sx={{
-
-                                "& .MuiChartsAxis-left .MuiChartsAxis-line":{
-                                    stroke: "#ffffff",
-                                    strokeWidth: 1,
-                                },
-                                "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
-                                    stroke: "#ffffff",
-                                    strokeWidth: 1,
-                                },
-                                "& .MuiChartsAxis-left .MuiChartsAxis-tick":{
-                                    stroke: "#ffffff",
-                                },
-                                "& .MuiChartsAxis-bottom .MuiChartsAxis-tick":{
-                                    stroke: '#ffffff'
-                                },
-                                "& .MuiChartsAxis-bottom .MuiChartsAxis-label":{
-                                    fill: '#ffffff'
-                                },
-                                "& .MuiChartsAxis-left .MuiChartsAxis-label":{
-                                    fill: '#ffffff'
-                                },
-                                "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
-                                    fill: '#ffffff',
-                                },
-                            }}                            
-                        /> 
-                        <Slider
-                            value={valueBinanceBalance}
-                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBinanceBalance, balanceDates)}
-                            valueLabelDisplay="auto"
-                            min={0}
-                            max={balanceDates.length - 1}
-                            sx={{ mt: 2 }}
-                        />   
-                    </Box>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='markIVOpenBinance' onChange={handleCheckboxChange} />
+                        <label htmlFor='markIVOpenBinance' style={{color: 'yellow'}}>markIV Open Binance</label>
                     </div>
-                    <div style={{textAlign: 'center'}}>
-                        <h2>Bybit Balance</h2>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='askIVOpenBinance' onChange={handleCheckboxChange} />
+                        <label htmlFor='askIVOpenBinance' style={{color: '#d00000'}}>askIV Open Binance</label>
                     </div>
-                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10em'}}>
-                        <Box style={{width: '70%'}}>
-                        <LineChart
-                            slotProps={{
-                                legend: {
-                                    labelStyle: {
-                                        fill: 'white',
-                                    }
-                                }
-                            }}
-                            grid={{ vertical: true , horizontal: true }}
-                            xAxis={[{
-                                data: balanceDates,
-                                valueFormatter: valueFormatter,
-                                min: balanceDates[valueBybitBalance[0]],
-                                max: balanceDates[valueBybitBalance[1]],
-                                label: 'Date',
-                                
-                            }]}
-                            series={[
-                                {
-                                    data: bybitBalance,
-                                    color: 'gold',
-                                    label: 'Bybit Balance'
-                                }
-                            ]}
-                            height={500}
-                            sx={{
-
-                                "& .MuiChartsAxis-left .MuiChartsAxis-line":{
-                                    stroke: "#ffffff",
-                                    strokeWidth: 1,
-                                },
-                                "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
-                                    stroke: "#ffffff",
-                                    strokeWidth: 1,
-                                },
-                                "& .MuiChartsAxis-left .MuiChartsAxis-tick":{
-                                    stroke: "#ffffff",
-                                },
-                                "& .MuiChartsAxis-bottom .MuiChartsAxis-tick":{
-                                    stroke: '#ffffff'
-                                },
-                                "& .MuiChartsAxis-bottom .MuiChartsAxis-label":{
-                                    fill: '#ffffff'
-                                },
-                                "& .MuiChartsAxis-left .MuiChartsAxis-label":{
-                                    fill: '#ffffff'
-                                },
-                                "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
-                                    fill: '#ffffff',
-                                },
-                            }}                            
-                        /> 
-                        <Slider
-                            value={valueBybitBalance}
-                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBybitBalance, balanceDates)}
-                            valueLabelDisplay="auto"
-                            min={0}
-                            max={balanceDates.length - 1}
-                            sx={{ mt: 2 }}
-                        />   
-                    </Box>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='prediction' onChange={handleCheckboxChange} />
+                        <label htmlFor='prediction' style={{color: '#ec0868'}}>Prediction</label>
+                    </div>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='bidIVCloseBinance' onChange={handleCheckboxChange} />
+                        <label htmlFor='bidIVCloseBinance' style={{color: '#38b000'}}>bidIV Close Binance</label>
+                    </div>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='markIVCloseBinance' onChange={handleCheckboxChange} />
+                        <label htmlFor='markIVCloseBinance' style={{color: 'yellow'}}>markIV Close Binance</label>
+                    </div>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='askIVCloseBinance' onChange={handleCheckboxChange} />
+                        <label htmlFor='askIVCloseBinance' style={{color: '#d00000'}}>askIV Close Binance</label>
+                    </div>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='bidIVOpenBybit' onChange={handleCheckboxChange} />
+                        <label htmlFor='bidIVOpenBybit' style={{color: '#38b000'}}>bidIV Open Bybit</label>
+                    </div>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='markIVOpenBybit' onChange={handleCheckboxChange} />
+                        <label htmlFor='markIVOpenBybit' style={{color: 'yellow'}}>markIV Open Bybit</label>
+                    </div>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='askIVOpenBybit' onChange={handleCheckboxChange} />
+                        <label htmlFor='askIVOpenBybit' style={{color: '#d00000'}}>askIV Open Bybit</label>
+                    </div>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='bidIVCloseBybit' onChange={handleCheckboxChange} />
+                        <label htmlFor='bidIVCloseBybit' style={{color: '#38b000'}}>bidIV Close Bybit</label>
+                    </div>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='markIVCloseBybit' onChange={handleCheckboxChange} />
+                        <label htmlFor='markIVCloseBybit' style={{color: 'yellow'}}>markIV Close Bybit</label>
+                    </div>
+                    <div style={{marginRight: '1em'}}>
+                        <input type='checkbox' name='askIVCloseBybit' onChange={handleCheckboxChange} />
+                        <label htmlFor='askIVCloseBybit' style={{color: '#d00000'}}>askIV Close Bybit</label>
                     </div>
                 </div>
-                <h1 style={{textAlign: 'center', border: '1px solid white', paddingTop: '1em', paddingBottom: '1em'}}>Positions History</h1>
-                <div style={{marginTop: '3em'}}>
-                    <div style={{textAlign: 'center'}}>
-                        <h2>General Positions History</h2>
-                    </div>
-                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Box  style={{width: '70%'}}>
+            </div>
+            <h1 style={{textAlign: 'center', border: '1px solid white', paddingTop: '1em', paddingBottom: '1em'}}>Balances</h1>
+            <div style={{marginTop: '3em'}}>
+                <div style={{textAlign: 'center'}}>
+                    <h2>General Balance</h2>
+                </div>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <Box  style={{width: '70%'}}>
+                    <LineChart
+                        margin={{left: 100}}
+                        slotProps={{
+                            grid: {
+                                fill: 'white',
+                            },
+                            legend: {
+                                labelStyle: {
+                                    fill: 'white',
+                                }
+                            }
+                        }}
+                        grid={{ vertical: true , horizontal: true }}
+                        xAxis={[{
+                            data: balanceDates,
+                            valueFormatter: valueFormatter,
+                            min: balanceDates[valueBalance[0]],
+                            max: balanceDates[valueBalance[1]],
+                            label: 'Date',
+                            
+                        }]}
+                        series={[
+                            {
+                                data: balance,
+                                color: 'gold',
+                                label: 'General Balance',
+                            }
+                        ]}
+                        height={500}
+                        sx={{
+
+                            "& .MuiChartsAxis-left .MuiChartsAxis-line":{
+                                stroke: "#ffffff",
+                                strokeWidth: 1,
+                            },
+                            "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
+                                stroke: "#ffffff",
+                                strokeWidth: 1,
+                            },
+                            "& .MuiChartsAxis-left .MuiChartsAxis-tick":{
+                                stroke: "#ffffff",
+                            },
+                            "& .MuiChartsAxis-bottom .MuiChartsAxis-tick":{
+                                stroke: '#ffffff'
+                            },
+                            "& .MuiChartsAxis-bottom .MuiChartsAxis-label":{
+                                fill: '#ffffff'
+                            },
+                            "& .MuiChartsAxis-left .MuiChartsAxis-label":{
+                                fill: '#ffffff',
+                            },
+                            "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
+                                fill: '#ffffff',
+                            },
+                        }}                            
+                    /> 
+                    <Slider
+                        value={valueBalance}
+                        onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBalance, balanceDates)}
+                        valueLabelDisplay="auto"
+                        min={0}
+                        max={balanceDates.length - 1}
+                        sx={{ mt: 2 }}
+                    />   
+                </Box>
+                </div>
+                <div style={{textAlign: 'center'}}>
+                    <h2>Binance Balance</h2>
+                </div>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <Box style={{width: '70%'}}>
+                    <LineChart
+                        slotProps={{
+                            legend: {
+                                labelStyle: {
+                                    fill: 'white',
+                                }
+                            }
+                        }}
+                        grid={{ vertical: true , horizontal: true }}
+                        xAxis={[{
+                            data: balanceDates,
+                            valueFormatter: valueFormatter,
+                            min: balanceDates[valueBinanceBalance[0]],
+                            max: balanceDates[valueBinanceBalance[1]],
+                            label: 'Date',
+                            
+                        }]}
+                        series={[
+                            {
+                                data: binanceBalance,
+                                color: 'gold',
+                                label: 'Binance Balance'
+                            }
+                        ]}
+                        height={500}
+                        sx={{
+
+                            "& .MuiChartsAxis-left .MuiChartsAxis-line":{
+                                stroke: "#ffffff",
+                                strokeWidth: 1,
+                            },
+                            "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
+                                stroke: "#ffffff",
+                                strokeWidth: 1,
+                            },
+                            "& .MuiChartsAxis-left .MuiChartsAxis-tick":{
+                                stroke: "#ffffff",
+                            },
+                            "& .MuiChartsAxis-bottom .MuiChartsAxis-tick":{
+                                stroke: '#ffffff'
+                            },
+                            "& .MuiChartsAxis-bottom .MuiChartsAxis-label":{
+                                fill: '#ffffff'
+                            },
+                            "& .MuiChartsAxis-left .MuiChartsAxis-label":{
+                                fill: '#ffffff'
+                            },
+                            "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
+                                fill: '#ffffff',
+                            },
+                        }}                            
+                    /> 
+                    <Slider
+                        value={valueBinanceBalance}
+                        onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBinanceBalance, balanceDates)}
+                        valueLabelDisplay="auto"
+                        min={0}
+                        max={balanceDates.length - 1}
+                        sx={{ mt: 2 }}
+                    />   
+                </Box>
+                </div>
+                <div style={{textAlign: 'center'}}>
+                    <h2>Bybit Balance</h2>
+                </div>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10em'}}>
+                    <Box style={{width: '70%'}}>
+                    <LineChart
+                        slotProps={{
+                            legend: {
+                                labelStyle: {
+                                    fill: 'white',
+                                }
+                            }
+                        }}
+                        grid={{ vertical: true , horizontal: true }}
+                        xAxis={[{
+                            data: balanceDates,
+                            valueFormatter: valueFormatter,
+                            min: balanceDates[valueBybitBalance[0]],
+                            max: balanceDates[valueBybitBalance[1]],
+                            label: 'Date',
+                            
+                        }]}
+                        series={[
+                            {
+                                data: bybitBalance,
+                                color: 'gold',
+                                label: 'Bybit Balance'
+                            }
+                        ]}
+                        height={500}
+                        sx={{
+
+                            "& .MuiChartsAxis-left .MuiChartsAxis-line":{
+                                stroke: "#ffffff",
+                                strokeWidth: 1,
+                            },
+                            "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
+                                stroke: "#ffffff",
+                                strokeWidth: 1,
+                            },
+                            "& .MuiChartsAxis-left .MuiChartsAxis-tick":{
+                                stroke: "#ffffff",
+                            },
+                            "& .MuiChartsAxis-bottom .MuiChartsAxis-tick":{
+                                stroke: '#ffffff'
+                            },
+                            "& .MuiChartsAxis-bottom .MuiChartsAxis-label":{
+                                fill: '#ffffff'
+                            },
+                            "& .MuiChartsAxis-left .MuiChartsAxis-label":{
+                                fill: '#ffffff'
+                            },
+                            "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
+                                fill: '#ffffff',
+                            },
+                        }}                            
+                    /> 
+                    <Slider
+                        value={valueBybitBalance}
+                        onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBybitBalance, balanceDates)}
+                        valueLabelDisplay="auto"
+                        min={0}
+                        max={balanceDates.length - 1}
+                        sx={{ mt: 2 }}
+                    />   
+                </Box>
+                </div>
+            </div>
+            <h1 style={{textAlign: 'center', border: '1px solid white', paddingTop: '1em', paddingBottom: '1em'}}>Positions History</h1>
+            <div style={{marginTop: '3em'}}>
+                <div style={{textAlign: 'center'}}>
+                    <h2>General Positions History</h2>
+                </div>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <Box  style={{width: '70%'}}>
                         <BarChart
                             margin={{left: 100}}
                             slotProps={{
@@ -1030,10 +1051,8 @@ function Analytics() {
                             grid={{ vertical: true , horizontal: true }}
                             xAxis={[{
                                 scaleType: 'band',
-                                data: positionsDates,
+                                data: positionsDates.slice(valuePositionsPercentage[0], valuePositionsPercentage[1] + 1),
                                 valueFormatter: valueFormatter,
-                                min: positionsDates[valuePositionsPercentage[0]],
-                                max: positionsDates[valuePositionsPercentage[1]],
                                 label: 'Date',
                             }]}
                             yAxis={[
@@ -1047,7 +1066,7 @@ function Analytics() {
                             ]}
                             series={[
                                 {
-                                    data: positionsPercentage,
+                                    data: positionsPercentage.slice(valuePositionsPercentage[0], valuePositionsPercentage[1] + 1),
                                     color: 'gold',
                                     label: 'Positions Profit %',
                                 }
@@ -1082,19 +1101,19 @@ function Analytics() {
                         /> 
                         <Slider
                             value={valuePositionsPercentage}
-                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValuePositionsPercentage, valuePositionsPercentage)}
+                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValuePositionsPercentage, positionsDates)}
                             valueLabelDisplay="auto"
                             min={0}
                             max={positionsDates.length - 1}
                             sx={{ mt: 2 }}
                         />   
                     </Box>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                        <h2>Binance LONG Positions History</h2>
-                    </div>
-                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Box  style={{width: '70%'}}>
+                </div>
+                <div style={{textAlign: 'center'}}>
+                    <h2>Binance LONG Positions History</h2>
+                </div>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <Box  style={{width: '70%'}}>
                         <BarChart
                             margin={{left: 100}}
                             slotProps={{
@@ -1110,10 +1129,8 @@ function Analytics() {
                             grid={{ vertical: true , horizontal: true }}
                             xAxis={[{
                                 scaleType: 'band',
-                                data: positionsDates,
+                                data: positionsDates.slice(valueBinanceLongPositions[0], valueBinanceLongPositions[1] + 1),
                                 valueFormatter: valueFormatter,
-                                min: positionsDates[valueBinanceLongPositions[0]],
-                                max: positionsDates[valueBinanceLongPositions[1]],
                                 label: 'Date',
                                 
                             }]}
@@ -1128,7 +1145,7 @@ function Analytics() {
                             ]}
                             series={[
                                 {
-                                    data: binanceLongPositions,
+                                    data: binanceLongPositions.slice(valueBinanceLongPositions[0], valueBinanceLongPositions[1] + 1),
                                     color: 'gold',
                                     label: 'Positions Profit $',
                                 }
@@ -1163,19 +1180,19 @@ function Analytics() {
                         /> 
                         <Slider
                             value={valueBinanceLongPositions}
-                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBinanceLongPositions, valueBinanceLongPositions)}
+                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBinanceLongPositions, positionsDates)}
                             valueLabelDisplay="auto"
                             min={0}
                             max={positionsDates.length - 1}
                             sx={{ mt: 2 }}
                         />   
                     </Box>
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                        <h2>Bybit SHORT Positions History</h2>
-                    </div>
-                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Box  style={{width: '70%'}}>
+                </div>
+                <div style={{textAlign: 'center'}}>
+                    <h2>Bybit SHORT Positions History</h2>
+                </div>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <Box  style={{width: '70%'}}>
                         <BarChart
                             margin={{left: 100}}
                             slotProps={{
@@ -1191,10 +1208,8 @@ function Analytics() {
                             grid={{ vertical: true , horizontal: true }}
                             xAxis={[{
                                 scaleType: 'band',
-                                data: positionsDates,
+                                data: positionsDates.slice(valueBybitShortPositions[0], valueBybitShortPositions[1] + 1),
                                 valueFormatter: valueFormatter,
-                                min: positionsDates[valueBybitShortPositions[0]],
-                                max: positionsDates[valueBybitShortPositions[1]],
                                 label: 'Date',
                                 
                             }]}
@@ -1209,7 +1224,7 @@ function Analytics() {
                             ]}
                             series={[
                                 {
-                                    data: bybitShortPositions,
+                                    data: bybitShortPositions.slice(valueBybitShortPositions[0], valueBybitShortPositions[1] + 1),
                                     color: 'gold',
                                     label: 'Positions Profit $',
                                 }
@@ -1241,20 +1256,20 @@ function Analytics() {
                                     fill: '#ffffff',
                                 },
                             }}                            
-                        /> 
+                        />
                         <Slider
                             value={valueBybitShortPositions}
-                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBybitShortPositions, valueBybitShortPositions)}
+                            onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBybitShortPositions, positionsDates)}
                             valueLabelDisplay="auto"
                             min={0}
                             max={positionsDates.length - 1}
                             sx={{ mt: 2 }}
                         />   
                     </Box>
-                    </div>
                 </div>
             </div>
-        </>
+        </div>
+        ) : <VerificationNotPassed isLoader={isLoader}/>}</>
     )
 }
 

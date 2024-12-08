@@ -1,12 +1,16 @@
 import {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 
+import VerificationNotPassed from '../components/VerificationNotPassed'
+
 import axios from 'axios'
 
 import '../css/Config.css'
 
-
 function Config() {
+	const [sessionResult, setSessionResult] = useState(false)
+	const [isLoader, setIsLoader] = useState(true)
+    
     const [configStatusText, setConfigStatusText] = useState("Config doesn't exist, create it!")
     const [configId, setConfigId] = useState(1)
 
@@ -23,10 +27,11 @@ function Config() {
 
     useEffect(() => {
         axios
-		.get(`http://${process.env.REACT_APP_API_PORT}/config`)
-		.then(res => {
-            if (res.data.length) {
-                const config = res.data[0]
+        .get(`http://${process.env.REACT_APP_API_PORT}/config`, {headers: {'passwordhash': sessionStorage['passwordhash']}})
+        .then(res => {
+            setSessionResult(res.data.verificationStatus)
+            if (res.data['config'].length) {
+                const config = res.data['config'][0]
 
                 setConfigStatusText('Config exist, you can update it!')
                 setConfigId(config['_id'])
@@ -42,10 +47,11 @@ function Config() {
                 setMaxDeviation(config['SHORT']['maxDeviation'])
                 setMarginFactor(config['SHORT']['marginFactor'])
             }
-		})
-		.catch(e => {
-			console.log(e)
-		})
+        })
+        .catch(e => {
+            console.log(e)
+            setIsLoader(false)
+        })
     }, [])
 
     const handleOnClick = () => {
@@ -65,7 +71,7 @@ function Config() {
             }
         }
 
-        axios.put(`http://${process.env.REACT_APP_API_PORT}/config/${configId}`, obj)
+        axios.put(`http://${process.env.REACT_APP_API_PORT}/config/${configId}`, obj, {headers: {'passwordhash': sessionStorage['passwordhash']}})
 		.then(res => {
             setConfigStatusText(res.data.message)
             console.log(res.data)
@@ -112,14 +118,14 @@ function Config() {
     }
     
     return (
-        <>
+        <>{sessionResult ? (
             <div>
-                <div>
-                    <div style={{textAlign: 'center'}}>
+                <div className="INBLOCK">
+                    <div>
                         <h1>Config Status: {configStatusText}</h1>
                     </div>
-                    <h1>LONG</h1>
-                    <div style={{display: 'flex', justifyContent: 'space-around'}}>
+                    <h1 style={{marginTop: '2em'}}>LONG</h1>
+                    <div className="POS">
                         <div>
                             <h2>predToIVOpenParam</h2>
                             <input type="number" name="predToIVOpenParam" value={predToIVOpenParam} onChange={handleInputChange}></input>
@@ -143,9 +149,9 @@ function Config() {
                     </div>
                     
                 </div>
-                <div>
-                    <h1>SHORT</h1>
-                    <div style={{display: 'flex', justifyContent: 'space-around'}}>
+                <div className="INBLOCK">
+                    <h1 style={{marginTop: '2em'}}>SHORT</h1>
+                    <div className="POS">
                         <div>
                             <h2>IVForClose</h2>
                             <input type="number" name="IVForClose" value={IVForClose} onChange={handleInputChange}></input>
@@ -164,7 +170,7 @@ function Config() {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div style={{marginBottom: "2em", marginLeft: "2em", marginRight: "2em"}}>
                     <div className='navigation'>
                        <Link to={'/'}>
                             <button>Home Page</button>
@@ -176,6 +182,8 @@ function Config() {
                     </div>
                 </div>
             </div>
+        ) : <VerificationNotPassed isLoader={isLoader}/>}
+            
         </>
     )
 }

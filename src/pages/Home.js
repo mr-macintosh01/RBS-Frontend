@@ -1,23 +1,26 @@
 import {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 
+import VerificationNotPassed from '../components/VerificationNotPassed'
+
 import axios from 'axios'
 
 import '../css/Home.css'
 
 function sendOrderToOMS(event) {
 	axios
-	.get(`http://${process.env.REACT_APP_API_PORT}/${event.target.innerHTML.replaceAll(' ', '')}`)
+	.get(`http://${process.env.REACT_APP_API_PORT}/${event.target.innerHTML.replaceAll(' ', '')}`, {headers: {'passwordhash': sessionStorage['passwordhash']}})
 	.then(res => {
 		console.log(res.data)
 	})
 	.catch(e => {
 		console.log(e)
-		console.log('Probably due to WebSocket reconnecting!')
 	})
 }
 
 function Home() {
+	const [sessionResult, setSessionResult] = useState(false)
+	const [isLoader, setIsLoader] = useState(true)
 	const [currentPositionCost, setCurrentPositionCost] = useState({'status': false})
 
 	const [data, setData] = useState({
@@ -27,15 +30,18 @@ function Home() {
             'bybitBalance': 0.0
         },
         'analytics': {
-            'serverTime': 0.0,
+            'price': 0.0,
 			'tradingRegime': 'None',
+            'serverTime': 0.0,
             'prediction': 0.0,
             'binanceOpen': 0.0,
             'bybitOpen': 0.0,
             'openTime': 0.0,
             'dataVector': {
 				'vector': []
-			}
+			},
+			'fatalErrorInAnalytics': false,
+			'decisionToTrade': false,
         },
         'position': {
 			'status': false,
@@ -45,12 +51,12 @@ function Home() {
 
 	const updateCurrentPositionCost = () => {
 		axios
-		.get(`http://${process.env.REACT_APP_API_PORT}/updateCurrentPositionCost`)
+		.get(`http://${process.env.REACT_APP_API_PORT}/updateCurrentPositionCost`, {headers: {'passwordhash': sessionStorage['passwordhash']}})
 		.then(res => {
 			const data = res.data
 			console.log(data)
 			
-			if (data['status']) {
+			if (data['status']) {	
 				setCurrentPositionCost(data)
 				return 0
 			}
@@ -64,20 +70,22 @@ function Home() {
 
 	useEffect(() => {
 		axios
-		.get(`http://${process.env.REACT_APP_API_PORT}/getData`)
+		.get(`http://${process.env.REACT_APP_API_PORT}/getData`, {headers: {'passwordhash': sessionStorage['passwordhash']}})
 		.then(res => {
 			console.log(res.data)
+			setSessionResult(res.data.verificationStatus)
 			setData(res.data)
 		})
 		.catch(e => {
 			console.log(e)
-			console.log('Probably due to WebSocket reconnecting!')
+			setIsLoader(false)
 		})
-		
 	}, [])
 	
+	
 	return (
-    	<div>
+		<>{sessionResult ? (
+			<div>
 			<div className="info">
 				<div>
 					<div style={{border: '2px solid white', paddingLeft: '1em', marginTop: '1em'}}>
@@ -95,12 +103,12 @@ function Home() {
 								(+data['analytics']['binanceOpen']['Calls'][1]['bidIV']).toFixed(2) + '/' +
 								(+data['analytics']['binanceOpen']['Calls'][1]['markIV']).toFixed(2) + '/' +
 								(+data['analytics']['binanceOpen']['Calls'][1]['askIV']).toFixed(2)
-							) : ''}</h3>
+							) : 'None'}</h3>
 							<h3>{data['analytics']['binanceOpen'] ? ('P ' +
 								(+data['analytics']['binanceOpen']['Puts'][1]['bidIV']).toFixed(2) + '/' +
 								(+data['analytics']['binanceOpen']['Puts'][1]['markIV']).toFixed(2) + '/' +
 								(+data['analytics']['binanceOpen']['Puts'][1]['askIV']).toFixed(2)
-							) : ''}</h3>
+							) : 'None'}</h3>
 							<h3>AveOpenIVBinance</h3>
 							<h3>{data['analytics']['binanceOpen'] ? (Math.sqrt(1/365) * (data['analytics']['binanceOpen']['Calls'].reduce((accum, current) => accum + +current['markIV'], 0) + data['analytics']['binanceOpen']['Puts'].reduce((accum, current) => accum + +current['markIV'], 0))/6).toFixed(5) : 'None'}</h3>
 						</div>
@@ -110,12 +118,12 @@ function Home() {
 								(+data['analytics']['bybitOpen']['Calls'][1]['bid1IV']).toFixed(2) + '/' +
 								(+data['analytics']['bybitOpen']['Calls'][1]['markIV']).toFixed(2) + '/' +
 								(+data['analytics']['bybitOpen']['Calls'][1]['ask1IV']).toFixed(2)
-							) : ''}</h3>
+							) : 'None'}</h3>
 							<h3>{data['analytics']['bybitOpen'] ? ('P ' +
 								(+data['analytics']['bybitOpen']['Puts'][1]['bid1IV']).toFixed(2) + '/' +
 								(+data['analytics']['bybitOpen']['Puts'][1]['markIV']).toFixed(2) + '/' +
 								(+data['analytics']['bybitOpen']['Puts'][1]['ask1IV']).toFixed(2)
-							) : ''}</h3>
+							) : 'None'}</h3>
 							<h3>AveOpenIVBybit</h3>
 							<h3>{data['analytics']['bybitOpen'] ? (Math.sqrt(1/365) * (data['analytics']['bybitOpen']['Calls'].reduce((accum, current) => accum + +current['markIV'], 0) + data['analytics']['bybitOpen']['Puts'].reduce((accum, current) => accum + +current['markIV'], 0))/6).toFixed(5) : 'None'}</h3>
 						</div>
@@ -130,7 +138,6 @@ function Home() {
 							<h4>Data Vector: </h4>
 							{data['analytics']['dataVector']['vector'].map(key => <h4 style={{margin: 0}} key={key}>{key.toFixed(3)}</h4>)}
 						</div>
-						{/* <h5>Data Vector: {data['analytics']['dataVector']['vector']}</h5> */}
 					</div>
 				</div>
 				<div>
@@ -154,8 +161,19 @@ function Home() {
 					</div>
 					<div>
 						<h2 style={{marginBottom: '0'}}>Current Trading Regime: {data['analytics']['tradingRegime']}</h2>
+						<h2>Error during analytics: {String(data['analytics']['fatalErrorInAnalytics'])}</h2>
+						<h2>Decision to trade today: {String(data['analytics']['decisionToTrade'])}</h2>
+						<h2 style={{marginBottom: '0', textAlign: 'center'}}>Position: </h2>
+						<div style={{display: 'flex', justifyContent: 'space-around'}}>
+							<div>
+								<h3>Status: {data['positionStatus'] || 'None'}</h3>
+							</div>
+							<div>
+								<h3>Regime: {data['positionRegime'] || 'None'}</h3>
+							</div>
+						</div>
 					</div>
-                    <div className='navigation'>
+                    <div className='navigation' >
                         <Link to={'/analytics'}>
                             <button>Analytics Page</button>
                         </Link>
@@ -451,8 +469,10 @@ function Home() {
 
 				</div>
 			) : ''}
+
     	</div>
-  	);
+		) : <VerificationNotPassed isLoader={isLoader}/>}</>	
+	)
 }
 
 export default Home;
