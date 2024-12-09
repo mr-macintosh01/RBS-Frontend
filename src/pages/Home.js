@@ -9,7 +9,7 @@ import '../css/Home.css'
 
 function sendOrderToOMS(event) {
 	axios
-	.get(`http://${process.env.REACT_APP_API_PORT}/${event.target.innerHTML.replaceAll(' ', '')}`, {headers: {'passwordhash': sessionStorage['passwordhash'], "Access-Control-Allow-Origin": process.env.REACT_APP_API_PORT}})
+	.get(`http://${process.env.REACT_APP_API_PORT}/${event.target.innerHTML.replaceAll(' ', '')}`, {headers: {'passwordhash': sessionStorage['passwordhash'], "Access-Control-Allow-Origin": 'http://' + process.env.REACT_APP_API_PORT}})
 	.then(res => {
 		console.log(res.data)
 	})
@@ -51,7 +51,7 @@ function Home() {
 
 	const updateCurrentPositionCost = () => {
 		axios
-		.get(`http://${process.env.REACT_APP_API_PORT}/updateCurrentPositionCost`, {headers: {'passwordhash': sessionStorage['passwordhash'], "Access-Control-Allow-Origin": process.env.REACT_APP_API_PORT}})
+		.get(`http://${process.env.REACT_APP_API_PORT}/updateCurrentPositionCost`, {headers: {'passwordhash': sessionStorage['passwordhash'], "Access-Control-Allow-Origin": 'http://' + process.env.REACT_APP_API_PORT}})
 		.then(res => {
 			const data = res.data
 			console.log(data)
@@ -70,7 +70,7 @@ function Home() {
 
 	useEffect(() => {
 		axios
-		.get(`http://${process.env.REACT_APP_API_PORT}/getData`, {headers: {'passwordhash': sessionStorage['passwordhash'], "Access-Control-Allow-Origin": process.env.REACT_APP_API_PORT}})
+		.get(`http://${process.env.REACT_APP_API_PORT}/getData`, {headers: {'passwordhash': sessionStorage['passwordhash'], "Access-Control-Allow-Origin": 'http://' + process.env.REACT_APP_API_PORT}})
 		.then(res => {
 			console.log(res.data)
 			setSessionResult(res.data.verificationStatus)
