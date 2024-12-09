@@ -456,7 +456,7 @@ function Analytics() {
             }
         }
 
-        axios.post(`http://${process.env.REACT_APP_API_PORT}/getAnalytics`, obj, {headers: {'passwordhash': sessionStorage['passwordhash']}})
+        axios.post(`http://${process.env.REACT_APP_API_PORT}/getAnalytics`, obj, {headers: {'passwordhash': sessionStorage['passwordhash'], "Access-Control-Allow-Origin": process.env.REACT_APP_API_PORT}})
         .then(res => {
             setSessionResult(res.headers.verificationstatus)
             const recreatedObj = {}   

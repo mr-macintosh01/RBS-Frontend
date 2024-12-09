@@ -14,7 +14,7 @@ function Verification() {
             'passwordText': passwordText
         }
 
-        axios.post(`http://${process.env.REACT_APP_API_PORT}/verify`, obj)
+        axios.post(`http://${process.env.REACT_APP_API_PORT}/verify`, obj, {headers: {"Access-Control-Allow-Origin": process.env.REACT_APP_API_PORT}})
         .then(res => {
             setVerificationMessage(res.data.message)
             window.sessionStorage.setItem('passwordhash', res.data.passwordHash)

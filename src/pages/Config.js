@@ -71,7 +71,7 @@ function Config() {
             }
         }
 
-        axios.put(`http://${process.env.REACT_APP_API_PORT}/config/${configId}`, obj, {headers: {'passwordhash': sessionStorage['passwordhash']}})
+        axios.put(`http://${process.env.REACT_APP_API_PORT}/config/${configId}`, obj, {headers: {'passwordhash': sessionStorage['passwordhash'], "Access-Control-Allow-Origin": process.env.REACT_APP_API_PORT}})
 		.then(res => {
             setConfigStatusText(res.data.message)
             console.log(res.data)
