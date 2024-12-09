@@ -27,7 +27,7 @@ function Config() {
 
     useEffect(() => {
         axios
-        .get(`http://${process.env.REACT_APP_API_PORT}/config`, {headers: {'passwordhash': sessionStorage['passwordhash'], "Access-Control-Allow-Origin": 'http://' + process.env.REACT_APP_API_PORT}})
+        .get(`http://${process.env.REACT_APP_API_PORT}/config`, {headers: {'passwordhash': sessionStorage['passwordhash']}})
         .then(res => {
             setSessionResult(res.data.verificationStatus)
             if (res.data['config'].length) {
@@ -71,7 +71,7 @@ function Config() {
             }
         }
 
-        axios.put(`http://${process.env.REACT_APP_API_PORT}/config/${configId}`, obj, {headers: {'passwordhash': sessionStorage['passwordhash'], "Access-Control-Allow-Origin": 'http://' + process.env.REACT_APP_API_PORT}})
+        axios.put(`http://${process.env.REACT_APP_API_PORT}/config/${configId}`, obj, {headers: {'passwordhash': sessionStorage['passwordhash']}})
 		.then(res => {
             setConfigStatusText(res.data.message)
             console.log(res.data)
