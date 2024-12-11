@@ -22,6 +22,17 @@ body {
 	justify-content: space-around;
 }
 
+.balances {
+	border: 2px solid white; 
+	padding-left: 1em;
+	margin-top: 1em;
+}
+
+.IV {
+	display: flex;
+	margin-top: 3em;
+}
+
 .position {
 	margin-bottom: 1em;
 }
@@ -65,4 +76,177 @@ body {
 	border: none;
 	background-color: white;
 	padding: 1em;
+	width: 150px;
 }
+
+.table {
+	display: flex; 
+	justify-content: space-around; 
+	border: 2px solid white;
+}
+
+@media(max-width: 1320px) {
+	.info {
+		flex-direction: column;
+	}
+
+	.balances {
+		display: flex;
+		justify-content: space-around;
+	}
+
+	.balances h1, h2 {
+		margin-top: 0.9em;
+		margin-bottom: 0.9em;
+		font-size: 1.5em
+
+	}
+
+	.IV {
+		justify-content: space-around;
+	}
+
+	.dAnalytics {
+		margin-top: 3em;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: center;	
+	}
+
+	.dAnalytics h4{
+		font-size: 1.2em;
+	}
+
+	.config {
+		margin-top: 3em;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: center;
+	}
+
+	.config h3 {
+		font-size: 1.2em;
+	}
+
+	.control-box {
+		margin-top: 3em;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+	}
+	
+	.control-box div {
+		width: 100%;
+	}
+
+	.control-panel div {
+		display: flex;
+		justify-content: space-around;
+	}
+
+	.regimes {
+		margin-top: 2em;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.regimes h2 {
+		font-size: 2em;
+	}
+
+	.regimes div {
+		display: flex;
+		justify-content: space-around;
+		font-size: 1.2em;
+	}
+
+	.position {
+		margin-top: 5em;
+		margin-bottom: 10em;
+	}
+
+	.positionInfo {
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.positionInfo div{
+		margin-top: 2em;
+		margin-bottom: 3em;
+	}
+}
+
+@media(max-width: 1050px) {
+	.openPositionInformation {
+		margin-top: 10em;
+	}
+
+	.openPositionInformation .Call, .Put {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.openPositionInformation .Call {
+		margin-bottom: 10em;
+	}
+	
+	.openPositionInformation .Call div, .Put div {
+		border: 1px solid white;
+		width: 100%;
+		text-align: center;
+	}
+
+	.currentPositionInformation div {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.table div {
+		border: 1px solid white;
+		width: 100%;
+		text-align: center;
+	}
+
+	.table {
+		margin-bottom: 10em;
+	}
+}
+
+@media(max-width: 800px) {
+	.balances {
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+@media(max-width: 600px) {
+	.regimes h2 {
+		font-size: 1.5em;
+	}
+
+	.regimes div {
+		flex-direction: column;
+		align-items: center;
+		font-size: 1em;
+	}
+	
+	.regimes h3 {
+		margin-bottom: 0;
+	}
+}
+
+@media(max-width: 450px) {
+	.control-panel div {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.control-panel button {
+		margin-bottom: 1.5em;
+	}
+}
+

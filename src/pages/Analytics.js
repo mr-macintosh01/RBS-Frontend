@@ -366,18 +366,18 @@ function Analytics() {
 
     const handleChange = (event, newValue, activeThumb, stateFunc, dates) => {
         if (!Array.isArray(newValue)) {
-            return;
+            return
         }
         if (newValue[1] - newValue[0] < minDistance) {
             if (activeThumb === 0) {
-                const clamped = Math.min(newValue[0], dates.length - minDistance - 1);
-                stateFunc([clamped, clamped + minDistance]);
+                const clamped = Math.min(newValue[0], dates.length - minDistance - 1)
+                stateFunc([clamped, clamped + minDistance])
             } else {
-                const clamped = Math.max(newValue[1], minDistance);
-                stateFunc([clamped - minDistance, clamped]);
+                const clamped = Math.max(newValue[1], minDistance)
+                stateFunc([clamped - minDistance, clamped])
             }
         } else {
-            stateFunc(newValue);
+            stateFunc(newValue)
         }
     }
     
@@ -458,6 +458,7 @@ function Analytics() {
 
         axios.post(`http://${process.env.REACT_APP_API_PORT}/getAnalytics`, obj, {headers: {'passwordhash': sessionStorage['passwordhash']}})
         .then(res => {
+            console.log(res.headers)
             setSessionResult(res.headers.verificationstatus)
             const recreatedObj = {}   
             const allDates = {}
@@ -683,9 +684,9 @@ function Analytics() {
 
     return (
         <>{sessionResult ? (
-            <div>
-            <div style={{display: 'flex', alignItems: 'center', border: '1px solid white'}}>
-                <div style={{display: 'flex', width: '58%', justifyContent: 'end'}}>
+            <div style={{marginBottom: '5em'}}>
+            <div className='header'>
+                <div className='analyticLabel'>
                     <h1>Analytics</h1>
                 </div>
                 <div className='navigation-analytics'>
@@ -701,13 +702,18 @@ function Analytics() {
                     </div>
                 </div>
             </div>
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                <Box style={{width: '70%'}}>
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', marginTop: '2em'}}>
+                <Box className='box'>
                     <LineChart
+                        margin={{ top: 120 }}
+                        className="chart"
                         slotProps={{
                             legend: {
                                 labelStyle: {
                                     fill: 'white',
+                                },
+                                margin: {
+                                    right: 100
                                 }
                             }
                         }}
@@ -723,7 +729,6 @@ function Analytics() {
                         series={
                             arrayToShow
                         }
-                        height={500}
                         sx={{
 
                             "& .MuiChartsAxis-left .MuiChartsAxis-line":{
@@ -752,6 +757,7 @@ function Analytics() {
                         }}                            
                     /> 
                     <Slider
+                        className="slider"
                         value={valueAnalytics}
                         onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueAnalytics, dates)}
                         valueLabelDisplay="auto"
@@ -762,7 +768,7 @@ function Analytics() {
                 </Box>
             </div>
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <div style={{maxWidth: '1200px', display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
+                <div className="checkBoxes">
                     <div style={{ marginRight: '1em'}}>
                         <input type='checkbox' name='historicalVolatility' onChange={handleCheckboxChange} />
                         <label htmlFor='historicalVolatility' style={{color: '#00b4d8'}}>Historical Volatility</label>
@@ -827,8 +833,9 @@ function Analytics() {
                     <h2>General Balance</h2>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <Box  style={{width: '70%'}}>
+                    <Box  className='box'>
                     <LineChart
+                        className="chart"
                         margin={{left: 100}}
                         slotProps={{
                             grid: {
@@ -856,7 +863,6 @@ function Analytics() {
                                 label: 'General Balance',
                             }
                         ]}
-                        height={500}
                         sx={{
 
                             "& .MuiChartsAxis-left .MuiChartsAxis-line":{
@@ -885,6 +891,7 @@ function Analytics() {
                         }}                            
                     /> 
                     <Slider
+                        className="slider"
                         value={valueBalance}
                         onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBalance, balanceDates)}
                         valueLabelDisplay="auto"
@@ -898,8 +905,9 @@ function Analytics() {
                     <h2>Binance Balance</h2>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <Box style={{width: '70%'}}>
+                    <Box className='box'>
                     <LineChart
+                        className="chart"
                         slotProps={{
                             legend: {
                                 labelStyle: {
@@ -923,7 +931,6 @@ function Analytics() {
                                 label: 'Binance Balance'
                             }
                         ]}
-                        height={500}
                         sx={{
 
                             "& .MuiChartsAxis-left .MuiChartsAxis-line":{
@@ -952,6 +959,7 @@ function Analytics() {
                         }}                            
                     /> 
                     <Slider
+                        className="slider"
                         value={valueBinanceBalance}
                         onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBinanceBalance, balanceDates)}
                         valueLabelDisplay="auto"
@@ -965,8 +973,9 @@ function Analytics() {
                     <h2>Bybit Balance</h2>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10em'}}>
-                    <Box style={{width: '70%'}}>
+                    <Box className='box'>
                     <LineChart
+                        className="chart"
                         slotProps={{
                             legend: {
                                 labelStyle: {
@@ -990,7 +999,6 @@ function Analytics() {
                                 label: 'Bybit Balance'
                             }
                         ]}
-                        height={500}
                         sx={{
 
                             "& .MuiChartsAxis-left .MuiChartsAxis-line":{
@@ -1019,6 +1027,7 @@ function Analytics() {
                         }}                            
                     /> 
                     <Slider
+                        className="slider"
                         value={valueBybitBalance}
                         onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBybitBalance, balanceDates)}
                         valueLabelDisplay="auto"
@@ -1035,8 +1044,9 @@ function Analytics() {
                     <h2>General Positions History</h2>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <Box  style={{width: '70%'}}>
+                    <Box  className='box'>
                         <BarChart
+                            className="chart"
                             margin={{left: 100}}
                             slotProps={{
                                 grid: {
@@ -1071,7 +1081,6 @@ function Analytics() {
                                     label: 'Positions Profit %',
                                 }
                             ]}
-                            height={500}
                             sx={{
 
                                 "& .MuiChartsAxis-left .MuiChartsAxis-line":{
@@ -1100,6 +1109,7 @@ function Analytics() {
                             }}                            
                         /> 
                         <Slider
+                            className="slider"
                             value={valuePositionsPercentage}
                             onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValuePositionsPercentage, positionsDates)}
                             valueLabelDisplay="auto"
@@ -1113,8 +1123,9 @@ function Analytics() {
                     <h2>Binance LONG Positions History</h2>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <Box  style={{width: '70%'}}>
+                    <Box  className='box'>
                         <BarChart
+                            className="chart"
                             margin={{left: 100}}
                             slotProps={{
                                 grid: {
@@ -1150,7 +1161,6 @@ function Analytics() {
                                     label: 'Positions Profit $',
                                 }
                             ]}
-                            height={500}
                             sx={{
 
                                 "& .MuiChartsAxis-left .MuiChartsAxis-line":{
@@ -1179,6 +1189,7 @@ function Analytics() {
                             }}                            
                         /> 
                         <Slider
+                            className="slider"
                             value={valueBinanceLongPositions}
                             onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBinanceLongPositions, positionsDates)}
                             valueLabelDisplay="auto"
@@ -1192,8 +1203,9 @@ function Analytics() {
                     <h2>Bybit SHORT Positions History</h2>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <Box  style={{width: '70%'}}>
+                    <Box  className='box'>
                         <BarChart
+                            className="chart"
                             margin={{left: 100}}
                             slotProps={{
                                 grid: {
@@ -1229,7 +1241,6 @@ function Analytics() {
                                     label: 'Positions Profit $',
                                 }
                             ]}
-                            height={500}
                             sx={{
 
                                 "& .MuiChartsAxis-left .MuiChartsAxis-line":{
@@ -1258,6 +1269,7 @@ function Analytics() {
                             }}                            
                         />
                         <Slider
+                            className="slider"
                             value={valueBybitShortPositions}
                             onChange={(event, newValue, activeThumb) => handleChange(event, newValue, activeThumb, setValueBybitShortPositions, positionsDates)}
                             valueLabelDisplay="auto"

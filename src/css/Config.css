@@ -11,6 +11,7 @@
 	border: none;
 	background-color: white;
 	padding: 1em;
+	margin-top: 1em;
 }
 
 .INBLOCK h1 {
@@ -38,14 +39,11 @@
 }
 
 @media(max-width: 700px) {
-	.POS div h2 {
-		font-size: 0.8em
+	.navigation {
+		flex-wrap: wrap
 	}
-}
 
-
-@media(max-width: 450px) {
-	.navigation button {
+	.POS div h2 {
 		font-size: 0.8em
 	}
 }

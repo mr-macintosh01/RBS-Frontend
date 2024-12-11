@@ -20,13 +20,90 @@
 	padding: 1em;
 }
 
-@media(max-width: 900px) {
+.header {
+	display: flex;
+	align-items: center;
+	border: 1px solid white;
+}
+
+.analyticLabel {
+	display: flex; 
+	width: 58%;
+	justify-content: end;
+}
+
+.chart {
+	height: 500px!important;
+}
+
+.box {
+	width: 70%;
+}
+
+.checkBoxes {
+	max-width: 1200px;
+	display: flex; 
+	justify-content: center; 
+	flex-wrap: wrap;
+	font-size: 1.2em;
+}
+
+.checkBoxes div {
+	display: flex;
+	justify-content: center;
+}
+
+.checkBoxes input {
+	width: 20px;
+	height: 20px;
+}
+
+@media(max-width: 1080px) {
+	.analyticLabel {
+		justify-content: start;
+	}
+
+	.navigation-analytics, .analyticLabel {
+		width: auto
+	}
+
+	.header {
+		justify-content: space-around
+	}
+
 	.navigation-analytics div:first-child {
-		margin-left: 7em;
+		margin-left: 0;
 	}
 	
 	.navigation-analytics div:last-child {
+		margin-left: 5em;
+	}
+
+	.box {
+		width: 90%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.box .slider {
+		width: 70%;
+	}
+}
+
+@media(max-width: 600px) {
+	.navigation-analytics div:last-child {
 		margin-left: 3em;
+	}
+
+	.slider {
+		height: 2px!important;
+	}
+}
+
+@media(max-width: 500px) {
+	.navigation-analytics div:last-child {
+		margin-left: 2em;
 	}
 
 	.navigation-analytics button {
@@ -34,26 +111,12 @@
 	}
 }
 
-@media(max-width: 700px) {
-	.navigation-analytics div:first-child {
-		margin-left: 5em;
-	}
-	
+@media(max-width: 450px) {
 	.navigation-analytics div:last-child {
 		margin-left: 1em;
 	}
 
 	.navigation-analytics button {
 		font-size: 0.8em;
-	}
-}
-
-@media(max-width: 500px) {
-	.navigation-analytics div:first-child {
-		margin-left: 3em;
-	}
-	
-	.navigation-analytics div:last-child {
-		margin-left: 1em;
 	}
 }

@@ -87,16 +87,14 @@ function Home() {
 		<>{sessionResult ? (
 			<div>
 			<div className="info">
-				<div>
-					<div style={{border: '2px solid white', paddingLeft: '1em', marginTop: '1em'}}>
+				<div className="infoBalIV">
+					<div className="balances">
 						<h1>Account: {data['balanceData']['balance'].toFixed(2)} $</h1>
-						<div>
-							<h2>Binance balance: {data['balanceData']['binanceBalance'].toFixed(2)} $</h2>
-							<h2>Bybit balance: {data['balanceData']['bybitBalance'].toFixed(2)} $</h2>
-						</div>
+						<h2>Binance balance: {data['balanceData']['binanceBalance'].toFixed(2)} $</h2>
+						<h2>Bybit balance: {data['balanceData']['bybitBalance'].toFixed(2)} $</h2>
 					</div>
 					
-					<div style={{display: 'flex', marginTop: '3em'}}>
+					<div className='IV'>
 						<div style={{marginRight: '3em'}}>
 							<h3>Binance open IV</h3>
 							<h3>{data['analytics']['binanceOpen'] ? ('C ' +
@@ -129,18 +127,19 @@ function Home() {
 						</div>
 					</div>
 				</div>
-				<div>
+				<div className="dAnalytics">
 					<h1>Day Analytics:</h1>
 					<div>
 						<h4>Prediction: {data['analytics']['prediction']}</h4>
-						<h4>Open Time: {data['analytics']['openTime']}</h4>
+						<h4>Open Time: </h4> 
+						<h4>{new Date(data['analytics']['openTime']).toISOString().split('.')[0]}</h4>
 						<div>
 							<h4>Data Vector: </h4>
 							{data['analytics']['dataVector']['vector'].map(key => <h4 style={{margin: 0}} key={key}>{key.toFixed(3)}</h4>)}
 						</div>
 					</div>
 				</div>
-				<div>
+				<div className="config">
 					<h1>Config: {data['position']['type']}</h1>
 					{ data['position']['status'] ? (
 						<div>
@@ -150,7 +149,7 @@ function Home() {
 						</div>
 					) : ''}
 				</div>
-				<div>
+				<div className="control-box">
 					<h2>Server Time: {new Date(data['analytics']['serverTime']).toISOString().split('.')[0]}</h2>
 					<div className="control-panel">
 						<div>
@@ -159,7 +158,7 @@ function Home() {
 							<button onClick={sendOrderToOMS} style={{background:'#ad0d0d'}}>Hard Stop</button>
 						</div>
 					</div>
-					<div>
+					<div className="regimes">
 						<h2 style={{marginBottom: '0'}}>Current Trading Regime: {data['analytics']['tradingRegime']}</h2>
 						<h2>Error during analytics: {String(data['analytics']['fatalErrorInAnalytics'])}</h2>
 						<h2>Decision to trade today: {String(data['analytics']['decisionToTrade'])}</h2>
@@ -240,7 +239,7 @@ function Home() {
 						<div style={{textAlign: 'center'}}>
 							<h2>Position Information</h2>
 						</div>
-						<div style={{display: 'flex', justifyContent: 'space-around', border: '2px solid white'}}>
+						<div className="table">
 							<div>
 								<h3>Entry Cost</h3>
 								<h3>{(+data['position']['positionEntryCost']).toFixed(2)}</h3>
@@ -302,7 +301,7 @@ function Home() {
 						<div style={{textAlign: 'center'}}>
 							<h2>Contract Information</h2>
 						</div>
-						<div style={{display: 'flex', justifyContent: 'space-around', border: '2px solid white'}}>
+						<div className="table">
 							<div>
 								<h3>Type</h3>
 								<h3>{currentPositionCost['positionCurrentCost'][0]['s'].split('-')[3]}</h3>
@@ -327,7 +326,7 @@ function Home() {
 								<h3>{(+currentPositionCost['positionCurrentCost'][0]['ao']).toFixed(2)}</h3>
 							</div>
 						</div>
-						<div style={{display: 'flex', justifyContent: 'space-around',  border: '2px solid white'}}>
+						<div className="table">
 							<div>
 								<h3>Type</h3>
 								<h3>{currentPositionCost['positionCurrentCost'][1]['s'].split('-')[3]}</h3>
