@@ -836,7 +836,6 @@ function Analytics() {
                     <Box  className='box'>
                     <LineChart
                         className="chart"
-                        margin={{left: 100}}
                         slotProps={{
                             grid: {
                                 fill: 'white',
@@ -1047,7 +1046,6 @@ function Analytics() {
                     <Box  className='box'>
                         <BarChart
                             className="chart"
-                            margin={{left: 100}}
                             slotProps={{
                                 grid: {
                                     fill: 'white',
@@ -1126,7 +1124,6 @@ function Analytics() {
                     <Box  className='box'>
                         <BarChart
                             className="chart"
-                            margin={{left: 100}}
                             slotProps={{
                                 grid: {
                                     fill: 'white',
@@ -1206,7 +1203,6 @@ function Analytics() {
                     <Box  className='box'>
                         <BarChart
                             className="chart"
-                            margin={{left: 100}}
                             slotProps={{
                                 grid: {
                                     fill: 'white',
